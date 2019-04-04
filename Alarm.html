@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alarm</title>
+    <link rel="stylesheet" href="css/calculatorfont.css">
+    <link rel="stylesheet" href="css/alarm.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <script>
+        datee = new Date;
+        randomno = 0;
+        counter = 0;
+        setInterval(backgroundd,5000);
+        function backgroundd(){
+            backgroundDay = ["url('images/alarmday1.png')","url('images/alarmday2.png')","url('images/alarmday3.png')"];
+            backgroundDayChooser = backgroundDay[parseInt(Math.random()*3)];
+            backgroundNight = ["url('images/alarmnight1.png')","url('images/alarmnight2.png')","url('images/alarmnight3.png')"];
+            backgroundNightChooser = backgroundNight[parseInt(Math.random()*3)];
+            if(datee.getHours() >= 6 && datee.getHours() <= 18){
+                main.style.backgroundImage = backgroundDayChooser;
+                document.body.style.backgroundColor = "#FFF494";
+            }
+
+            else{
+                main.style.backgroundImage = backgroundNightChooser;
+                document.body.style.backgroundColor = "#02021a";
+            }
+        }
+        alarmSound = new Audio;
+        // function timetime() {
+        //     hourr = "<select id='hourrr'>";
+        //     for (var i = 1; i <= 12; i++) {
+        //         hourr += "<option value='" + i + "'>" + i + "</option>";
+        //     }
+        //     hourr += "</select>";
+        //
+        //     hour.innerHTML = hourr;
+        //
+        //     minutee = "<select id='minuteee'>";
+        //     for (var i = 0; i <= 59; i++) {
+        //         minutee += "<option value='" + i + "'>" + i + "</option>";
+        //     }
+        //     minutee += "</select>";
+        //     minute.innerHTML = minutee;
+        //
+        //     secondd = "<select id='seconddd'>";
+        //     for (var i = 0; i <= 59; i++) {
+        //         secondd += "<option value='" + i + "'>" + i + "</option>";
+        //     }
+        //     secondd += "</select>";
+        //     second.innerHTML = secondd;
+        //
+        //     timeswitchh = "<select id='timeswitchh'>  <option value='AM'> AM </option> <option value='AM'> AM </option> </select> ";
+        //
+        //     timeswitch.innerHTML = timeswitchh;
+        // }
+
+         setInterval(timing);
+
+         function timing() {
+             datee = new Date;
+
+
+             if(datee.getHours() <10){
+                 if (datee.getHours() > 12) {
+                     datenow = "0" + (datee.getHours() - 12) + " : " + datee.getMinutes() + " : " + datee.getSeconds() + " PM";
+                     display.innerText = datenow;
+                     alarmer();
+                 }
+
+                 else{
+                     datenow = "0" + datee.getHours() + " : " + datee.getMinutes() + " : " + datee.getSeconds() + " AM";
+                     display.innerText = datenow;
+                     alarmer();
+                 }
+             }
+
+             else if(datee.getMinutes() <10){
+                 if (datee.getHours() > 12) {
+                     datenow = (datee.getHours() - 12) + " : 0" + datee.getMinutes() + " : " + datee.getSeconds() + " PM";
+                     display.innerText = datenow;
+                     alarmer();
+                 }
+
+                 else{
+                     datenow = datee.getHours() + " : 0" + datee.getMinutes() + " : " + datee.getSeconds() + " AM";
+                     display.innerText = datenow;
+                     alarmer();
+                 }
+             }
+
+             else if(datee.getSeconds() <10){
+                 if (datee.getHours() > 12) {
+                     datenow = (datee.getHours() - 12) + " : " + datee.getMinutes() + " : 0" + datee.getSeconds() + " PM";
+                     display.innerText = datenow;
+                     alarmer();
+                 }
+
+                 else{
+                     datenow = datee.getHours() + " : " + datee.getMinutes() + " : 0" + datee.getSeconds() + " AM";
+                     display.innerText = datenow;
+                     alarmer();
+                 }
+             }
+             else{
+                 if (datee.getHours() > 12) {
+                     datenow = (datee.getHours() - 12) + " : " + datee.getMinutes() + " : " + datee.getSeconds() + " PM";
+                     display.innerText = datenow;
+                     alarmer();
+                 }
+
+                 else{
+                     datenow = datee.getHours() + " : " + datee.getMinutes() + " : " + datee.getSeconds() + " AM";
+                     display.innerText = datenow;
+                     alarmer();
+                 }
+             }
+
+         }
+
+         function alarmer() {
+             if(timeswitchh.value == 'pm'){
+                 if (datee.getHours() == (parseInt(hourr.value) + 12) && datee.getMinutes() == minutee.value && datee.getSeconds() == 0) {
+                     setAlarm();
+                 }
+                 else{
+                     null;
+                 }
+             }
+
+             else{
+                 if (datee.getHours() == hourr.value && datee.getMinutes() == minutee.value  && datee.getSeconds() == 0) {
+                     setAlarm();
+                 }
+             }
+         }
+
+        function setAlarm() {
+            alarmSound.src = "alarmsound.mp3";
+            alarmSound.play();
+            alarmSound.volume = 1.0;
+            alarmSound.loop = true;
+            main.style.display = "none";
+            snoozing.style.display = "inline-block";
+            snoozer.style.display = "block";
+            stopalarm.style.display = "block";
+            snoozer.removeAttribute("disabled");
+            snoozer.style.cursor = "pointer";
+            document.body.style.animationName = "alarmBchange";
+
+
+        }
+
+        function snooze() {
+                counter++;
+                if(counter <= 2){
+                    snoozer.style.display = "none";
+                    alarmSound.pause();
+                    setTimeout(setAlarm,5000);
+                }
+
+                 else{
+                    snoozer.setAttribute("disabled","disabled");
+                    snoozer.style.cursor = "notAllowed";
+                    counter = 0;
+                }
+
+        }
+
+
+        function alarmsettere() {
+             if(datee.getHours() > 12){
+                 hourr.value = datee.getHours() -12;
+                 timeswitchh.value = "pm"
+             }
+
+             else{
+                 hourr.value = datee.getHours();
+             }
+
+            minutee.value = datee.getMinutes();
+
+        }
+
+        function stopAlarm() {
+            disply.style.display = "block";
+            randomno1 = parseInt(Math.random()*1000);
+            randomno2 = parseInt(Math.random()*60);
+            randomno =    randomno1 * randomno2;
+            alarmQuestion.innerHTML = "What is " + randomno1 + " * " + randomno2 + " ?";
+            alarmAnswer.setAttribute("placeholder","Input Answer");
+
+        }
+
+        function pauseAlarm() {
+            if(parseInt(alarmAnswer.value) == randomno){
+                alarmSound.pause();
+                stopalarm.style.display = "none";
+                snoozer.style.display = "none";
+                main.style.display = "block";
+                disply.style.display = "none";
+                alarmAnswer.value = "";
+                document.body.style.animationName = "";
+            }
+            else{
+                alarmAnswer.setAttribute("placeholder","You are still sleeping o");
+            }
+        }
+        
+        function  alarmsetter() {
+            if(hour.style.display == "inline-block") {
+                hour.style.display = "none";
+                minute.style.display = "none";
+                timeswitch.style.display = "none";
+            }
+            else {
+                alarmButton.innerHTML = "SET ALARM <i class='fa fa-bell'> </i>"
+                hour.style.display = "inline-block";
+                minute.style.display = "inline-block";
+                timeswitch.style.display = "inline-block";
+            }
+        }
+
+    </script>
+
+</head>
+<body onload="alarmsettere(),backgroundd()">
+<div id="main" onmouseover="alarmSetter.style.display = 'block'" onmouseout="alarmSetter.style.display = 'none'">
+    <div id="mainn" >
+<div id="display" ></div>
+
+<div id="alarmSetter" style="display: none">
+    <button onclick="alarmsetter()" id="alarmButton">ALARM <i class="fa fa-bell"> </i> </button>
+    <br />
+<span id="hour" style="display: none"><select id="hourr"><option value="0">00</option><option value="1">01</option><option value="2">02</option><option value="3">03</option>
+    <option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option>
+    <option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option></select></span>
+
+
+<span id="minute" style="display: none"><select id="minutee"><option value="0">00</option><option value="1">01</option><option value="2">02</option>
+    <option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option>
+    <option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="46">46</option><option value="47">47</option><option value="48">48</option><option value="49">49</option><option value="50">50</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="54">54</option><option value="55">55</option><option value="56">56</option><option value="57">57</option><option value="58">58</option><option value="59">59</option></select></span>
+
+
+<!--<div id="second"><select id="secondd" onchange="alarmsetter()"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option><option value="32">32</option><option value="33">33</option><option value="34">34</option><option value="35">35</option><option value="36">36</option><option value="37">37</option><option value="38">38</option><option value="39">39</option><option value="40">40</option><option value="41">41</option><option value="42">42</option><option value="43">43</option><option value="44">44</option><option value="45">45</option><option value="46">46</option><option value="47">47</option><option value="48">48</option><option value="49">49</option><option value="50">50</option><option value="51">51</option><option value="52">52</option><option value="53">53</option><option value="54">54</option><option value="55">55</option><option value="56">56</option><option value="57">57</option><option value="58">58</option><option value="59">59</option></select></div>-->
+
+
+<span id="timeswitch" style="display: none"> <select id="timeswitchh">
+    <option value="am">AM</option>
+    <option value="pm">PM</option>
+</select></span>
+
+</div>
+    </div>
+</div>
+    <div id="snoozing" style="display: none;position: absolute;left:40%">
+<span><input value="Snooze" onclick="snooze()" id="snoozer" type="button" style="position: fixed;left:400px;"></span>
+<span> <input value="Stop Alarm"  onclick="stopAlarm()" id="stopalarm" type="button" style="position: fixed;left:800px;"></span>
+
+
+
+<div id="disply" style="font-size: 50px;text-align: center;position: absolute;top:150px;left:-100px;display: none">
+    <div id="alarmQuestion" style="margin-top: 20px;text-align: center"></div>
+    <input type="text" id="alarmAnswer">
+    <button id="alarmAnswerClick" onclick="pauseAlarm()">Click To Stop Sleepy Head <i class="fa fa-smile-o"></i></button>
+</div>
+    </div>
+
+</body>
+</html>
